@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil | Ma calculatrice{% endblock %}
+
+{% block content %}
+<section class="card">
+    <h2>Bienvenue sur ma calculatrice</h2>
+    <p>Effectuez vos opérations mathématiques simplement et rapidement.</p>
+    <a class="button" href="{{ url_for('calcul') }}">Commencer un calcul</a>
+</section>
+{% endblock %}

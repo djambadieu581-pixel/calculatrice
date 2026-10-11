@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Historique | Ma calculatrice{% endblock %}
+
+{% block content %}
+<section class="card">
+    <h2>Historique des calculs</h2>
+    {% if historique %}
+    <ul class="history">
+        {% for operation in historique %}<li>{{ operation }}</li>{% endfor %}
+    </ul>
+    {% else %}
+    <p>Aucun calcul pour le moment.</p>
+    {% endif %}
+</section>
+{% endblock %}

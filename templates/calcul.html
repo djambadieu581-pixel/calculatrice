@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Calculer | Ma calculatrice{% endblock %}
+
+{% block content %}
+<section class="card">
+    <h2>Effectuer un calcul</h2>
+    <form method="post">
+        <label for="nombre1">Premier nombre</label>
+        <input id="nombre1" name="nombre1" type="number" step="any" required>
+
+        <label for="operation">Opération</label>
+        <select id="operation" name="operation">
+            <option value="addition">Addition (+)</option>
+            <option value="soustraction">Soustraction (−)</option>
+            <option value="multiplication">Multiplication (×)</option>
+            <option value="division">Division (÷)</option>
+        </select>
+
+        <label for="nombre2">Deuxième nombre</label>
+        <input id="nombre2" name="nombre2" type="number" step="any" required>
+        <button class="button" type="submit">Calculer</button>
+    </form>
+
+    {% if resultat is not none %}<p class="result">Résultat : {{ resultat }}</p>{% endif %}
+    {% if erreur %}<p class="error">{{ erreur }}</p>{% endif %}
+</section>
+{% endblock %}

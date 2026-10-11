@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Historique{% endblock %}
+
+{% block content %}
+
+<h2>Historique des calculs</h2>
+
+{% if historique %}
+
+    <ul>
+        {% for calcul in historique %}
+            <li>{{ calcul }}</li>
+        {% endfor %}
+    </ul>
+
+{% else %}
+
+    <p>Aucun calcul effectué pour le moment.</p>
+
+{% endif %}

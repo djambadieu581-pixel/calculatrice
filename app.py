@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, jsonify, render_template, request
 
 from models import Calculatrice
 
@@ -39,6 +39,43 @@ def calcul():
 @app.route("/historique")
 def historique():
     return render_template("historique.html", historique=calculatrice.obtenir_historique())
+
+
+@app.route("/api/v1/calculer", methods=["POST"])
+def api_calculer():
+    donnees = request.get_json(silent=True)
+
+    if not isinstance(donnees, dict):
+        return jsonify({
+            "erreur": "Le corps de la requête doit être un objet JSON."
+        }), 400
+
+    try:
+        a = float(donnees["nombre1"])
+        b = float(donnees["nombre2"])
+        operation = donnees["operation"]
+
+        operations = {
+            "+": calculatrice.addition,
+            "-": calculatrice.soustraction,
+            "*": calculatrice.multiplication,
+            "/": calculatrice.division,
+        }
+        if operation not in operations:
+            return jsonify({"erreur": "Opération non reconnue."}), 400
+        if operation == "/" and b == 0:
+            return jsonify({"erreur": "La division par zéro est impossible."}), 400
+
+        resultat = operations[operation](a, b)
+        return jsonify({
+            "nombre1": a,
+            "nombre2": b,
+            "operation": operation,
+            "resultat": resultat,
+        }), 200
+    except (KeyError, TypeError, ValueError) as exc:
+        message = str(exc) or "Données manquantes ou invalides."
+        return jsonify({"erreur": message}), 400
 
 
 if __name__ == "__main__":
